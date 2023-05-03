@@ -1,0 +1,2 @@
+ERROR: # of reads is not enough to determine HLAtypes.
+# of reads: 0

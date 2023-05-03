@@ -1,0 +1,39 @@
+{
+    "classifiers": [
+      "Intended Audience :: Developers",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: MIT License",
+      "Natural Language :: English",
+      "Operating System :: Unix",
+      "Operating System :: POSIX",
+      "Topic :: Utilities"
+    ],
+    "entry_points": {
+      "console_scripts": ["toil_hla=toil_hla.cli:main"]
+    },
+    "install_requires": [
+      "toil_container>=2.0.3",
+      "more-itertools<6.0.0",
+      "Click>=7",
+      "pandas>=0.23.4"
+    ],
+    "extras_require": {
+      "test": [
+        "coverage>=4.4.2",
+        "pydocstyle>=2.1.1",
+        "pytest-cov>=2.5.1",
+        "pytest-env>=0.6.2",
+        "pylint>=1.8.1",
+        "tox>=2.9.1"
+      ]
+    },
+    "author": "Dylan Domenico",
+    "keywords": [],
+    "license": "BSD",
+    "name": "toil_hla",
+    "test_suite": "tests",
+    "long_description": "📘 learn more on `GitHub <https://github.com/papaemmelab/toil_hla>`_!",
+    "description": "🩸 HLA typing by several tools.",
+    "url": "https://github.com/papaemmelab/toil_hla"
+  }
+  
