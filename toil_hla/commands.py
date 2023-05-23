@@ -4,7 +4,6 @@ from toil.common import Toil
 
 from toil_hla import jobs
 from toil_hla import options
-from toil_hla import validators
 from toil_hla import constants
 
 
@@ -14,7 +13,6 @@ def run_toil(toil_options):
 
     Arguments:
         toil_options (NameSpace): an argparse name space with toil options.
-        step (str): either subclones, refitcn, or finalise.
     """
     print(toil_options.reference)
 

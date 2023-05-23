@@ -7,7 +7,6 @@ from toil_container import ContainerArgumentParser
 import click
 
 from toil_hla import __version__
-from toil_hla import constants
 from toil_hla import validators
 
 

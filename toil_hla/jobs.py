@@ -1,14 +1,9 @@
 """toil_hla jobs."""
-from glob import glob
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 from os.path import isdir
 import os
-import tempfile
-import shutil
-import math
-import pickle
 import subprocess
 
 from toil_container import ContainerJob
@@ -32,13 +27,13 @@ class StartJob(ContainerJob):
 class LilacJob(ContainerJob):
     def __init__(self, options, bamfile, sample_id, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run lilac on a BAM file.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
-            index (int): split job index.
             options (object): toil_hla options structure.
-            region (list): region to run picard tools on in the format (chr, start, end).
+            bamfile (str): path to BAM file.
+            sample_id (str): sample ID.
         """
         self.bamfile = bamfile
         self.sample_id = sample_id
@@ -84,13 +79,15 @@ class LilacJob(ContainerJob):
 class HLAscanJob(ContainerJob):
     def __init__(self, options, bamfile, sample_id, gene, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run hlascan on a BAM file.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
             index (int): split job index.
             options (object): toil_hla options structure.
-            region (list): region to run picard tools on in the format (chr, start, end).
+            bamfile (str): path to BAM file.
+            sample_id (str): sample ID.
+            gene (str): gene name.
         """
         self.bamfile = bamfile
         self.sample_id = sample_id
@@ -132,23 +129,23 @@ class HLAscanJob(ContainerJob):
         ]
 
         # Open a log file for writing
-        with open(join(outdir, f"{self.gene}.txt"), "w") as log_file:
+        with open(join(outdir, f"{self.gene}.txt"), "w", encoding="utf-8") as log_file:
             try:
                 subprocess.check_call(cmd, cwd=outdir, stdout=log_file)
-            except subprocess.CalledProcessError as e:
+            except subprocess.CalledProcessError as _:
                 pass
 
 
 class RNAJob(ContainerJob):
     def __init__(self, options, bamfile, sample_id, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run an RNA job.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
-            index (int): split job index.
             options (object): toil_hla options structure.
-            region (list): region to run picard tools on in the format (chr, start, end).
+            bamfile (str): path to BAM file.
+            sample_id (str): sample id.
         """
         self.bamfile = bamfile
         self.sample_id = sample_id
@@ -176,14 +173,13 @@ class RNAJob(ContainerJob):
 class ArcasHLAExtract(RNAJob):
     def __init__(self, options, bamfile, sample_id, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run arcasHLA extract on a BAM file.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
             options (object): toil_hla options structure.
-            index (int): split file index.
-            mutations (str): path to mutations.
-            outpath (str): path to output annotated mutations to.
+            bamfile (str): path to BAM file.
+            sample_id (str): sample id.
         """
         super().__init__(
             options=options,
@@ -214,14 +210,13 @@ class ArcasHLAExtract(RNAJob):
 class ArcasHLAGenotype(RNAJob):
     def __init__(self, options, bamfile, sample_id, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run arcasHLA genotype on a BAM file.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
             options (object): toil_hla options structure.
-            index (int): split file index.
-            mutations (str): path to mutations.
-            outpath (str): path to output annotated mutations to.
+            bamfile (str): path to BAM file.
+            sample_id (str): sample id.
         """
         super().__init__(
             options=options,
@@ -257,14 +252,13 @@ class ArcasHLAGenotype(RNAJob):
 class Seq2HLAJob(RNAJob):
     def __init__(self, options, bamfile, sample_id, **kwargs):
         """
-        Add the pileup inputs, outputs and index as attributes.
+        Run seq2HLA on a BAM file.
 
         Arguments:
             kwargs (dict): extra ContainerJob key word arguments.
             options (object): toil_hla options structure.
-            index (int): split file index.
-            mutations (str): path to mutations.
-            outpath (str): path to output annotated mutations to.
+            bamfile (str): path to BAM file.
+            sample_id (str): sample id.
         """
         super().__init__(
             options=options,

@@ -15,13 +15,8 @@ cause problems, the code will get executed twice:
 Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
 
-import sys
-
-import click
-
 from toil_hla import __version__
 from toil_hla import commands
-from toil_hla import constants
 
 
 def main(command=None):
